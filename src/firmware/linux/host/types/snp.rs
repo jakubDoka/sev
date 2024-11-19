@@ -295,7 +295,7 @@ pub struct SnpVlekLoad {
     pub vlek_wrapped_address: u64,
 }
 
-#[cfg(feature = "snp")]
+#[cfg(all(feature = "snp", target_os = "linux"))]
 impl SnpVlekLoad {
     /// Creates a new VLEK load instruction from a hashstick.
     pub fn new(hashstick: &WrappedVlekHashstick) -> Self {

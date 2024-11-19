@@ -3,7 +3,7 @@
 //! Operations to calculate guest measurement for different SEV modes
 use crate::{
     error::*,
-    launch::snp::PageType,
+    firmware::host::PageType,
     measurement::{
         gctx::{Gctx, Updating, VMSA_GPA},
         large_array::LargeArray,

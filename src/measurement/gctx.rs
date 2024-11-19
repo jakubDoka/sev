@@ -7,9 +7,8 @@ use openssl::sha::sha384;
 
 use crate::error::*;
 
-#[cfg(target_os = "linux")]
 use crate::{
-    launch::snp::PageType,
+    firmware::host::PageType,
     measurement::snp::{SnpLaunchDigest, LD_BYTES},
 };
 
@@ -102,7 +101,7 @@ impl Gctx<Updating> {
 
     /// Update Lanunch digest type according to page type and guest physical address.
     /// Some Page types don't require data. Some page types just require size of the page.
-    #[cfg(target_os = "linux")]
+    //#[cfg(target_os = "linux")]
     pub fn update_page(
         &mut self,
         page_type: PageType,

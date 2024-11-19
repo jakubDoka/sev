@@ -10,6 +10,7 @@ mod types;
 
 pub use types::*;
 
+#[cfg(target_os = "linux")]
 use crate::error::*;
 
 #[cfg(target_os = "linux")]
@@ -27,6 +28,7 @@ use std::fs::{File, OpenOptions};
 /// Checks the `fw_err` field on the [GuestRequest](crate::firmware::linux::guest::ioctl::GuestRequest) structure
 /// to make sure that no errors were encountered by the VMM or the AMD
 /// Secure Processor.
+#[cfg(target_os = "linux")]
 fn map_fw_err(raw_error: RawFwError) -> UserApiError {
     let (upper, lower): (u32, u32) = raw_error.into();
 

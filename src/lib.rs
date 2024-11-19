@@ -99,7 +99,6 @@ pub mod launch;
 #[cfg(all(
     any(feature = "sev", feature = "snp"),
     any(feature = "openssl", feature = "crypto_nossl"),
-    target_os = "linux"
 ))]
 pub mod measurement;
 #[cfg(all(target_os = "linux", feature = "openssl", feature = "sev"))]
