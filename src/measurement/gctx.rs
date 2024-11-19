@@ -101,7 +101,6 @@ impl Gctx<Updating> {
 
     /// Update Lanunch digest type according to page type and guest physical address.
     /// Some Page types don't require data. Some page types just require size of the page.
-    //#[cfg(target_os = "linux")]
     pub fn update_page(
         &mut self,
         page_type: PageType,
