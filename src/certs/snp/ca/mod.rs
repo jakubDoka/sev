@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
+//! Operations for a Certificate Authority (CA) chain.
 #[cfg(feature = "openssl")]
 use openssl::x509::X509;
 
 use super::*;
-
-/// Operations for a Certificate Authority (CA) chain.
 
 /// A Certificate Authority (CA) chain.
 #[derive(Clone, Debug)]
