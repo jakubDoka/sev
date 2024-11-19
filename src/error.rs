@@ -9,6 +9,7 @@ use std::{
     error,
     fmt::{Debug, Display},
     io,
+    path::PathBuf,
 };
 
 #[cfg(feature = "openssl")]
@@ -944,7 +945,7 @@ pub enum MeasurementError {
     BincodeError(bincode::ErrorKind),
 
     /// File Error Handling
-    FileError(std::io::Error),
+    FileError(std::io::Error, Option<PathBuf>),
 
     /// Vec from hex Error Handling
     FromHexError(hex::FromHexError),
@@ -989,7 +990,12 @@ impl std::fmt::Display for MeasurementError {
             MeasurementError::FromSliceError(e) => write!(f, "Error converting slice: {e}"),
             MeasurementError::UUIDError(e) => write!(f, "UUID Error encountered: {e}"),
             MeasurementError::BincodeError(e) => write!(f, "Bincode error encountered: {e}"),
-            MeasurementError::FileError(e) => write!(f, "Failed handling file: {e}"),
+            MeasurementError::FileError(e, Some(path)) => {
+                write!(f, "Failed handling file ({}): {e}", path.display())
+            }
+            MeasurementError::FileError(e, None) => {
+                write!(f, "Failed handling file: {e}")
+            }
             MeasurementError::FromHexError(e) => write!(f, "Converting hex to vector error: {e}"),
             MeasurementError::GCTXError(e) => write!(f, "GCTX Error Encountered: {e}"),
             MeasurementError::OVMFError(e) => write!(f, "OVMF Error Encountered: {e}"),
@@ -1044,7 +1050,7 @@ impl std::convert::From<bincode::ErrorKind> for MeasurementError {
 
 impl std::convert::From<std::io::Error> for MeasurementError {
     fn from(value: std::io::Error) -> Self {
-        Self::FileError(value)
+        Self::FileError(value, None)
     }
 }
 

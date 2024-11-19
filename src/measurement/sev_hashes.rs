@@ -156,17 +156,12 @@ impl SevHashes {
         initrd: Option<PathBuf>,
         append: Option<&str>,
     ) -> Result<Self, MeasurementError> {
-        let mut kernel_file = File::open(kernel)?;
-        let mut kernel_data = Vec::new();
-        kernel_file.read_to_end(&mut kernel_data)?;
-
+        let kernel_data =
+            std::fs::read(&kernel).map_err(|e| MeasurementError::FileError(e, Some(kernel)))?;
         let kernel_hash = sha256(&kernel_data);
         let initrd_data = match initrd {
             Some(path) => {
-                let mut initrd_file = File::open(path)?;
-                let mut data = Vec::new();
-                initrd_file.read_to_end(&mut data)?;
-                data
+                std::fs::read(&path).map_err(|e| MeasurementError::FileError(e, Some(path)))?
             }
             None => Vec::new(),
         };
